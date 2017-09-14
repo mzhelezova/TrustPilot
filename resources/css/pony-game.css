@@ -101,9 +101,11 @@ section#create hr.symbol-primary:after {
 	height: 70px;
 }
 
-#create label > img: hover {
+#create label > img:hover {
 	-webkit-filter: grayscale(0);
 	filter: grayscale(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
 }
 
 #create label > input:checked + img { /* (RADIO CHECKED) IMAGE STYLES */

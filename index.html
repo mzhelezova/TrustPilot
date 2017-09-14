@@ -9,6 +9,7 @@
     <meta name="author" content="">
 
     <title>Pony Game - A challenge</title>
+	<link rel="resources/images/favicon.ico" href="favicon.ico" />
 
     <!-- Bootstrap core CSS -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -104,7 +105,7 @@
 				<div class="col">
 					<div class="row controls">
 						<div style="float: left;">
-							<input type="button" value="Show path" class="btn" onclick="game.maze.drawPath(game.findWay(game.maze.endPoint))">
+							<input type="button" value="Show path" class="btn" onclick="game.maze.drawPath(game.maze.findWay(game.maze.endPoint))">
 						</div>
 						<div style="float: right;">
 							<input type="button" class="btn rounded-btn" value="+" onclick="game.maze.increaseCellSize()">

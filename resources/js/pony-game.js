@@ -1,9 +1,27 @@
 var game = {
 	maze: {
 		x: 20, //initial cell height and width
+		showPath: false
 	},
-	state: undefined
+	state: undefined,
+	defaultPony: "twilightsparkle"
 };
+
+//try to load a game
+$(document).ready(function(){
+	//retrieve maze's id
+	var params = new URLSearchParams(window.location.search);
+	if(params.has("id")) { 	
+		var id = params.get("id");
+		var pony = params.get("pony");
+		
+		if(pony == null) {
+			pony = game.defaultPony;
+		}
+
+		game.construct(id, pony);
+	}
+});
 
 game.create = function() {
 	var game = this;
@@ -11,6 +29,12 @@ game.create = function() {
 	var ponyId = $("input[name='pony']:checked").attr("id");
 	var height = $("input[id='height']").val();
 	var width = $("input[id='width']").val();
+	
+	// more complex validation?
+	if(ponyName == undefined) {
+		showErrorMessage("Please select a pony!");
+		return;
+	}
 	
 	var dataToSend = {"maze-width" : parseInt(width), "maze-height": parseInt(height), "maze-player-name": ponyName};
 	var jqxhr = $.post({
@@ -25,22 +49,13 @@ game.create = function() {
 			});
 		
 		jqxhr.done(function(gameInfo) {
-			game.construct(gameInfo['maze_id'], ponyId);
+			var id = gameInfo['maze_id'];
+			game.construct(id, ponyId);
+			window.history.pushState({}, "","?id=" +  id + "&pony=" + ponyId);
 		});
 };
 
-game.load = function(newMaze, ponyImgId) {
-	var maze = this.maze;
-	maze.construct(newMaze, ponyImgId);
-	maze.draw();
-	
-	$("#play .game-play").removeClass("active");
-	$("#play .game-play.playground").addClass("active");
-	
-	scrollToSection("#play", -140);
-}
-
-game.construct = function(id, ponyImgId) {
+game.construct = function(id, ponyId) {
 	var jqxhr = $.get({
 		url: "https://ponychallenge.trustpilot.com/pony-challenge/maze/" + id,
 		contentType: "application/json; charset=utf-8"	
@@ -56,13 +71,24 @@ game.construct = function(id, ponyImgId) {
 		game.state = newMaze["game-state"].state
 		
 		if(game.state === "active" || game.state === "Active") {
-			game.load(newMaze, ponyImgId);
+			game.load(newMaze, ponyId);
 		}
 		else { //game isn't active
 			var imgUrl = newMaze["game-state"]["hidden-url"];
 			game.over(imgUrl);
 		}
 	});
+}
+
+game.load = function(newMaze, ponyId) {
+	var maze = this.maze;
+	maze.construct(newMaze, ponyId);
+	maze.draw();
+	
+	$("#play .game-play").removeClass("active");
+	$("#play .game-play.playground").addClass("active");
+	
+	scrollToSection("#play", -140);
 }
 
 game.maze.construct = function(newMaze, ponyId) {
@@ -200,8 +226,9 @@ game.maze.drawDot = function (cell) {
 	maze.ctx.fill();
 }
 
-game.findWay = function(endPos) {
-	var maze = this.maze;
+game.maze.findWay = function(endPos) {
+	var maze = this;
+	maze.showPath = true;
 	
 	var ponyPos = maze.pony;
 	
@@ -289,6 +316,11 @@ game.maze.draw = function() {
 	maze.drawCell(maze.ponyImg, maze.pony);
 	maze.drawCell($("#domokun")[0], maze.domokun);
 	maze.drawCell($("#end")[0], maze.endPoint);
+	
+	if(maze.showPath) {
+		maze.drawPath(maze.findWay(maze.endPoint));
+	}
+
 }
 
 game.maze.clear = function() {
