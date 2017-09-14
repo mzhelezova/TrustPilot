@@ -94,6 +94,7 @@ game.load = function(newMaze, ponyId) {
 game.maze.construct = function(newMaze, ponyId) {
 	var maze = this;
 	
+	maze.showPath = false;
 	maze.data = newMaze.data;
 	maze.domokun = newMaze.domokun[0];
 	maze.pony = newMaze.pony[0];
