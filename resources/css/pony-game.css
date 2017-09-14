@@ -115,8 +115,9 @@ section#create hr.symbol-primary:after {
 	margin: 20px 0;
 }
 
-#create form > div:first-of-type, #create form > div:last-of-type  {
+#create form > .row:first-of-type, #create form > .row:last-of-type  {
 	margin: 50px 0 20px 0;
+	text-align: center;
 }
 
 /*----- Section Play Game -----*/
