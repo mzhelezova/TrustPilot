@@ -14,11 +14,15 @@
     <!-- Bootstrap core CSS -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-
+	
+	<!-- Chart.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+	
     <link href="resources/css/pony-game.css" rel="stylesheet">
+	
 	<script src="resources/js/pony-game.js"></script>
+	<script src="resources/js/about-me.js"></script>
 	<script src="resources/js/helper.js"></script>
 
 
@@ -129,8 +133,12 @@
       <div class="container">
         <h2 class="text-center">About Me</h2>
         <hr class="symbol-primary">
-			
-      </div>
+		<canvas id="about-me"></canvas>	
+		
+		<div class="row">
+			<a href="MZ_resume2017.pdf" class="btn" target="_blank" role="button" style="margin: 0 auto;" >Read more about me</a>
+		</div>
+	  </div>
     </section>
 
     <!-- Footer -->
@@ -140,7 +148,7 @@
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-	
+
 	<img id="domokun" src="resources/images/domokun.png" style="display: none"></img>
 	<img id="end" src="resources/images/end.png" style="display: none"></img>
 	
